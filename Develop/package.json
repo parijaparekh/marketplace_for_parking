@@ -1,0 +1,36 @@
+{
+  "name": "rent-a-bay",
+  "version": "1.0.0",
+  "description": "Marketplace for parking spots",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parijaparekh/marketplace_for_parking.git"
+  },
+  "keywords": [
+    "marketplace",
+    "for",
+    "parking",
+    "spots"
+  ],
+  "author": "Tyson Jackson, Sidney Mak, Parija Parekh.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/parijaparekh/marketplace_for_parking/issues"
+  },
+  "homepage": "https://github.com/parijaparekh/marketplace_for_parking#readme",
+  "devDependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-session-sequelize": "^7.1.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "handlebars": "^4.7.7",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.25.6"
+  }
+}
