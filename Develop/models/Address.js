@@ -19,7 +19,7 @@ Address.init(
             default: "Western Australia",  
         }, 
         street_number:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         street_name:{

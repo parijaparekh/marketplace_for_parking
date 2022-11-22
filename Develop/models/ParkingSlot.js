@@ -13,7 +13,7 @@ ParkingSlot.init(
             type: DataTypes.INTEGER,
             allowNull: false, 
             primaryKey: true,
-            autoincreament: true,
+            autoIncrement: true,
         }, 
         leaserId: {
             type: DataTypes.INTEGER,

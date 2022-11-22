@@ -2,6 +2,8 @@ const User = require('./User');
 const ParkingSlot = require('./ParkingSlot');
 const SlotBooking = require('./SlotBooking');
 const Address = require('./Address');
+const ParkingSlotDates = require('./ParkingSlotDates');
+const LocationTag = require('./LocationTag');
 
 User.hasMany(ParkingSlot, {
     foreignKey: 'leaserId', 
@@ -22,6 +24,25 @@ SlotBooking.belongsTo(User, {
 
 ParkingSlot.hasMany(SlotBooking, {
     foreignKey: "parkingSlotId"
+
+});
+
+ParkingSlot.hasMany(ParkingSlotDates, {
+    foreignKey: "parkingSlotId", 
+    onDelete: 'CASCADE'
+});
+
+ParkingSlot.hasMany(LocationTag, {
+    foreignKey: "parkingSlotId", 
+    onDelete: 'CASCADE'
+});
+
+ParkingSlotDates.belongsTo(ParkingSlot,{
+    foreignKey: "parkingSlotId"
+});
+
+LocationTag.belongsTo(ParkingSlot,{
+    foreignKey: "parkingSlotId"
 });
 
 SlotBooking.belongsTo(ParkingSlot,{
@@ -37,4 +58,4 @@ ParkingSlot.belongsTo(Address, {
     foreignKey: 'addressId'
 });
 
-module.exports = {User, Address, ParkingSlot, SlotBooking};
+module.exports = {User, Address, ParkingSlot, ParkingSlotDates, LocationTag, SlotBooking};
