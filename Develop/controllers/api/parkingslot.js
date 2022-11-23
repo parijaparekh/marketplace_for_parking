@@ -13,28 +13,24 @@ async function createAddress(addressData){
     }
 }
 
-router.post('/', async (req, res) => {
+
+router.post('/', async (req, resp) => {
     try {
-      //console.log(req.body);
-      const {street_name, street_number, state, postcode, suburb, slotNo, dates, tags,  ...partialData} = req.body;
-      console.log(dates, tags);
-      //const addressData = ;
-      //const addressData = {street_name, street_number, state, postcode, suburb};
+      console.log(req.body);
+      const {street_name, street_number, state, postcode, suburb, slotNo, dates, tags, ...partialData} = req.body;
+      console.log(dates, tags, partialData);
+      //let tags = [];
       const addressData = await createAddress({street_name, street_number, state, postcode, suburb, slotNo});
-      //const parkingSlot = await ParkingSlot.create(req.body, result.id)
       let parkingSlotData;
-      let parkingSlotDateFailure = [];
       if (addressData instanceof Address){
-        /* create Parking slot. */
-        //console.log()
-        //console.log({...partialData, "leaserId":`${req.session.user_id}`, "addressId": `${addressData.id}`});
         parkingSlotData = await ParkingSlot.create({...partialData, "leaserId":`${req.session.user_id}`, "addressId": `${addressData.id}`});
-        //console.log(req.session.user_id);
         if (parkingSlotData instanceof ParkingSlot){
-          /* Make entries in parkingSlotDates */
-          let parkingSlotDates = [];
-          let incorrectDates = []
+          /* Make entries in parkingSlotDates and LocationTags */
+                    
           //parking slot dates persistence
+          let parkingSlotDates = [];
+          let incorrectDates = [];
+
           dates.forEach(date => {
             const formattedDate = new Date(date);
             if (formattedDate instanceof Date){
@@ -56,10 +52,25 @@ router.post('/', async (req, res) => {
           const locationTagData = await LocationTag.bulkCreate(locationTags);
         }; //end of if (parkingSlotData instanceof ParkingSlot)
       }; //end of if (addressData instanceof Address)      
-      res.status(200).json(parkingSlotData);
-    } catch (err) {
-      res.status(400).json(err);
+      resp.status(200).json(parkingSlotData);
+    } 
+    catch (err) {
+      resp.status(400).json(err);
     }
+}); 
+
+// searching a parkingSlot by date and LocationTag 
+router.post('/search', async(req, resp) => {
+  try{
+    const parkingSlots = await ParkingSlot.findAll({include: [
+                                      {model: User},
+                                      {model: LocationTag, where: {locationTag: req.body.locationTag}}, 
+                                      {model: ParkingSlotDates, where: {date: new Date(req.body.date)}}],});
+    resp.status(200).json(parkingSlots);
+  } 
+  catch (err) {
+    resp.status(400).json(err);
+  }
 });
 
 module.exports = router;

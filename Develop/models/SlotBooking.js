@@ -1,6 +1,7 @@
-const {Model, DataTypes} = require('sequelize');
+const {Model, DataTypes, Op} = require('sequelize');
 const sequelize = require('../config/connection');
 const ParkingSlot = require('./ParkingSlot');
+const ParkingSlotDates = require('./ParkingSlotDates');
 const User = require('./User');
 
 class SlotBooking extends Model{}
@@ -13,7 +14,7 @@ SlotBooking.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        parkingslotId: {
+        parkingSlotId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -50,6 +51,13 @@ SlotBooking.init(
             }, 
             beforeUpdate: async (updatedSlotBookingData) => {
 
+            },
+            afterCreate: async (newSlotBookingData) => {
+                // delete the entry for this date from the parkingSlotDates table
+                console.log(newSlotBookingData.dateTimeFrom);
+                const rows = await ParkingSlotDates.destroy({where: {
+                                            parkingSlotId: newSlotBookingData.parkingSlotId, 
+                                            date: {[Op.between]: [newSlotBookingData.dateTimeFrom, newSlotBookingData.dateTimeTo]}}});
             },
         },
         sequelize,

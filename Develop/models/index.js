@@ -24,7 +24,6 @@ SlotBooking.belongsTo(User, {
 
 ParkingSlot.hasMany(SlotBooking, {
     foreignKey: "parkingSlotId"
-
 });
 
 ParkingSlot.hasMany(ParkingSlotDates, {
