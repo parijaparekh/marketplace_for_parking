@@ -84,7 +84,8 @@ router.put('/:id', async(req, res) => {
       },
       {
         where:{
-          id: req.params.id
+          id: req.params.id,
+          leaser_id: req.session.user_id
         }
       })
       res.status(200).json("Parking Slot updated!")
@@ -100,7 +101,8 @@ router.delete('single/:id', async(req, res) => {
     const slotGoBoom = await ParkingSlot.destroy(
       {
         where:{
-          id: req.params.id
+          id: req.params.id,
+          leaser_id: req.session.user_id
         }
       })
       res.status(200).json("Parking Slot deleted!")
@@ -111,12 +113,12 @@ router.delete('single/:id', async(req, res) => {
 })
 
 //Deletes all parking slots from a specific user, with their ID as the parameter.
-router.delete('all/:id', async(req, res) => {
+router.delete('/all', async(req, res) => {
   try {
     const slotsGoBoom = await ParkingSlot.destroy(
       {
         where:{
-          leaser_id: req.params.id
+          leaser_id: req.session.user_id
         }
       })
       res.status(200).json("All Parking Slots deleted!")
