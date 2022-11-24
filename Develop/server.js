@@ -26,7 +26,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
+//Temporary port till testing is complete
 sequelize.sync({ force: false }).then(() => {
     console.log("Sync Complete");
-    app.listen(PORT, () => console.log('Now listening'));
+    app.listen(PORT, () => console.log(`Now listening at at http://localhost:${PORT}`));
 });

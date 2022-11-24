@@ -73,4 +73,8 @@ router.post('/search', async(req, resp) => {
   }
 });
 
+//delete specific or all parking slots
+
+//update specific details
+
 module.exports = router;
