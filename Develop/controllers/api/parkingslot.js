@@ -17,6 +17,7 @@ async function createAddress(addressData){
 router.post('/', async (req, resp) => {
     try {
       console.log(req.body);
+      //Splits the request body into relevant constants. partialData contains the rate and optionally the booking time frame.
       const {street_name, street_number, state, postcode, suburb, slotNo, dates, tags, ...partialData} = req.body;
       console.log(dates, tags, partialData);
       //let tags = [];
@@ -73,8 +74,56 @@ router.post('/search', async(req, resp) => {
   }
 });
 
-//delete specific or all parking slots
+//Update path. What feasably changes are the booking timeframes and the rates, so it isn't very big.
+router.put('/:id', async(req, res) => {
+  try {
+    const updatedSlot = await ParkingSlot.update(
+      {
+        bookingTimeFrame: req.body.bookingTimeFrame,
+        rate: req.body.rate
+      },
+      {
+        where:{
+          id: req.params.id
+        }
+      })
+      res.status(200).json("Parking Slot updated!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
 
-//update specific details
+//Deletes a singular parking slot based on its id
+router.delete('single/:id', async(req, res) => {
+  try {
+    const slotGoBoom = await ParkingSlot.destroy(
+      {
+        where:{
+          id: req.params.id
+        }
+      })
+      res.status(200).json("Parking Slot deleted!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+//Deletes all parking slots from a specific user, with their ID as the parameter.
+router.delete('all/:id', async(req, res) => {
+  try {
+    const slotsGoBoom = await ParkingSlot.destroy(
+      {
+        where:{
+          leaser_id: req.params.id
+        }
+      })
+      res.status(200).json("All Parking Slots deleted!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
 
 module.exports = router;
