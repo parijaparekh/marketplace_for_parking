@@ -64,6 +64,7 @@ router.post('/search', async(req, resp) => {
   try{
     const parkingSlots = await ParkingSlot.findAll({include: [
                                       {model: User},
+                                      {model: Address},
                                       {model: LocationTag, where: {locationTag: req.body.locationTag}}, 
                                       {model: ParkingSlotDates, where: {date: new Date(req.body.date)}}],});
     resp.status(200).json(parkingSlots);
