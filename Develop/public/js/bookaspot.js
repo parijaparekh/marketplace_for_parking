@@ -7,5 +7,6 @@ const bookaspotHandler = async (event) => {
   }
 };
 
+console.log( typeof document.querySelector('#bookaspot'));
 document.querySelector('#bookaspot').addEventListener('click', bookaspotHandler);
 

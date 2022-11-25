@@ -22,8 +22,8 @@ router.get('/profile', withAuth, async (req, res) => {
   }
 });
 
-router.get('/rentaspot', (req, res) => {
-  res.render('rentaspot');
+router.get('/rentaspot', withAuth, async (req, res) => {
+  res.render('rentaspot', {logged_in: true});
 });
 
 router.get('/login', (req, res) => {
