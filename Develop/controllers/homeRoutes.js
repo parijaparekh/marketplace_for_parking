@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, ParkingSlot, SlotBooking } = require('../models');
+const { User, ParkingSlot, SlotBooking, Address, LocationTag, ParkingSlotDates } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/profile', withAuth, async (req, res) => {
@@ -22,6 +22,9 @@ router.get('/profile', withAuth, async (req, res) => {
   }
 });
 
+router.get('/rentaspot', (req, res) => {
+  res.render('rentaspot');
+});
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
@@ -29,7 +32,6 @@ router.get('/login', (req, res) => {
     res.redirect('/profile');
     return;
   }
-
   res.render('signup');
 });
 

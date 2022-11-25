@@ -25,7 +25,7 @@
                   <a class="nav-link active" aria-current="page" href="#">Sell A Spot</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Rent A Spot</a>
+                  <a class="nav-link" href="/rentaspot">Rent A Spot</a>
                 </li>
                 <a href="/profile">profile</a>
               <button class="btn btn-outline-success" type="warning" id="logout">Logout</button>
@@ -61,9 +61,11 @@
         </footer>
 
         
-        <script src="./js/login.js"></script>
+        
         {{#if logged_in}}
           <script src="./js/logout.js"></script>
+        {{else}}
+          <script src="./js/login.js"></script>
         {{/if}}     
     
 

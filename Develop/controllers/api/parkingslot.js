@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { ParkingSlot, Address, User, ParkingSlotDates, LocationTag} = require('../../models');
 
-
 async function createAddress(addressData){
     try{
         console.log("From createAddress", addressData);
@@ -12,7 +11,6 @@ async function createAddress(addressData){
         return err;
     }
 }
-
 
 router.post('/', async (req, resp) => {
     try {
@@ -60,14 +58,21 @@ router.post('/', async (req, resp) => {
 }); 
 
 // searching a parkingSlot by date and LocationTag 
-router.post('/search', async(req, resp) => {
+router.get('/search', async(req, resp) => {
   try{
+    console.log("Printing stored data", req.query.locationTag, req.query.date);
     const parkingSlots = await ParkingSlot.findAll({include: [
                                       {model: User},
                                       {model: Address},
-                                      {model: LocationTag, where: {locationTag: req.body.locationTag}}, 
-                                      {model: ParkingSlotDates, where: {date: new Date(req.body.date)}}],});
-    resp.status(200).json(parkingSlots);
+                                      {model: LocationTag, where: {locationTag: req.query.locationTag}}, 
+                                      {model: ParkingSlotDates, where: {date: new Date(req.query.date)}}],
+                                      raw: true,
+                                      nest: true});
+  
+    console.log(...parkingSlots);
+    resp.render('listspots', {parkingSlots});
+    return;
+    
   } 
   catch (err) {
     resp.status(400).json(err);
