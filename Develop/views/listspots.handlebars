@@ -13,7 +13,7 @@
           <td>{{parkingSlot.address.slotNo}}, {{parkingSlot.address.street_number}} {{parkingSlot.address.street_name}}, {{parkingSlot.address.suburb}}, {{parkingSlot.address.state}}-{{parkingSlot.address.postcode}}</td>
           <td>{{parkingSlot.parkingSlotDates.date}}</td>
           <td>{{parkingSlot.rate}}</td>
-          <td><button type="click" class="btn btn-success"  id="bookaspot" data-id={{parkingSlot.id}} data-date={{parkingSlot.parkingSlotDates.date}}>Book Now</button></td>
+          <td><button type="click" class="btn btn-success"  id="bookaspot" data-id={{parkingSlot.id}} data-date={{parkingSlot.parkingSlotDates.date}} data-rate={{parkingSlot.rate}}>Book Now</button></td>
       </tr>
   </tbody>
   {{/each}}
@@ -27,4 +27,4 @@
     </tfoot>
 </table>
 
-<script src="/Users/parijaparekh/coding-uwa/course_content/project_2/Develop/public/js/bookaspot.js"></script>
+<script src="/js/bookaspot.js"></script>
