@@ -10,7 +10,7 @@
       <h3>Your Parking Slots for Lease:</h3>
       {{#each parkingSlots as |parkingSlot|}}
         <div class="border bg-info p-2">
-          <p>{{addressId}}: ${{rate}} {{bookingTimeFrame}}</p>
+          <p>{{address.street_number}} {{address.street_name}}: ${{rate}} {{bookingTimeFrame}}</p>
         </div>
       {{/each}}
     </div>
@@ -18,7 +18,7 @@
       <h3>Parking Slots you have booked:</h3>
       {{#each slotbookings as |bookedSlot|}}
         <div class="border bg-info p-2">
-          <p>{{parkingSlotId}}: Booked from {{format_date dateTimeFrom}} to {{format_date dateTimeTo}}</p>
+          <p>{{parkingSlot.address.street_number}} {{parkingSlot.address.street_name}}: Booked from {{format_date dateTimeFrom}} to {{format_date dateTimeTo}}</p>
         </div>
       {{/each}}
     </div>
