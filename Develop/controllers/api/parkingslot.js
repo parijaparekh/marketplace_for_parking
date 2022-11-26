@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { ParkingSlot, Address, User, ParkingSlotDates, LocationTag} = require('../../models');
-
+const withAuth = require('../../utils/auth');
 
 async function createAddress(addressData){
     try{
@@ -13,8 +13,7 @@ async function createAddress(addressData){
     }
 }
 
-
-router.post('/', async (req, resp) => {
+router.post('/', withAuth, async (req, resp) => {
     try {
       console.log(req.body);
       //Splits the request body into relevant constants. partialData contains the rate and optionally the booking time frame.
@@ -61,13 +60,20 @@ router.post('/', async (req, resp) => {
 }); 
 
 // searching a parkingSlot by date and LocationTag 
-router.post('/search', async(req, resp) => {
+router.get('/search', withAuth, async(req, resp) => {
   try{
+    console.log("Printing stored data", req.query.locationTag, req.query.date);
     const parkingSlots = await ParkingSlot.findAll({include: [
                                       {model: User},
-                                      {model: LocationTag, where: {locationTag: req.body.locationTag}}, 
-                                      {model: ParkingSlotDates, where: {date: new Date(req.body.date)}}],});
-    resp.status(200).json(parkingSlots);
+                                      {model: Address},
+                                      {model: LocationTag, where: {locationTag: req.query.locationTag}}, 
+                                      {model: ParkingSlotDates, where: {date: new Date(req.query.date)}}],
+                                      raw: true,
+                                      nest: true});
+  
+    console.log(...parkingSlots);
+    resp.render('listspots', {parkingSlots, logged_in: true});  
+    
   } 
   catch (err) {
     resp.status(400).json(err);
