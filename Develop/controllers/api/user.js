@@ -56,12 +56,13 @@ router.get('/logout', withAuth, (req, res) => {
   console.log("Logout");
   if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.status(204).end();
-      res.render('login');
+      res.redirect('/login');
+      //res.status(204).end();
+      //res.render('login');
     });
   } else {
     res.status(404).end();
-    res.render('login');
+    //res.render('login');
   }
 });
 

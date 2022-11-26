@@ -18,15 +18,15 @@
     <title>Project 2</title>
 </head>
 <body>
+    
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">RENTABAY</a>
-          
-            {{#if logged_in}}
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">RENTABAY</a>  
+        {{#if logged_in}}    
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/sellaspot">Sell A Spot</a>
@@ -34,22 +34,24 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/rentaspot">Rent A Spot</a>
                 </li>
-              <button class="btn btn-primary" type="button" id="dashboard" href="/profile">Dashboard</button>
-              <button class="btn btn-primary" type="button" id="logout">Logout</button>
-              {{else}}
-              <form class="d-flex" id="login-form">
-                <input class="form-control me-2" type="text" placeholder="Email" aria-label="text" id="email-login">
-                <input class="form-control me-2" type="password" placeholder="Password" aria-label="text" id="password-login">
-                <button class="btn btn-outline-success" type="submit">Signin</button>
-              </form>
-              {{/if}}
+                <button class="btn btn-primary" type="button" id="dashboard" href="/profile">Dashboard</button>
+                <button class="btn btn-primary" type="click" id="logout">Logout</button>
+              </ul>
+          {{else}}
+            <form class="d-flex" id="login-form">
+              <input class="form-control me-2" type="text" placeholder="Email" aria-label="text" id="email-login">
+              <input class="form-control me-2" type="password" placeholder="Password" aria-label="text" id="password-login">
+              <button class="btn btn-outline-success" type="submit">Signin</button>
+            </form>
           </div>
-        </div>
-      </nav>
+          {{/if}}
+      </div>
+    </nav>
+      
 
       <main class="container container-fluid mt-5">
       <!-- Render the sub layout -->
-      {{{ body }}}
+        {{{ body }}}
       </main>
 
       <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
