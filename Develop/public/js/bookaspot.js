@@ -1,14 +1,14 @@
 const bookaspotHandler = async (event) => {
   if ((event.target.hasAttribute('data-id')) && (event.target.hasAttribute('data-date'))){
-    const id = event.target.getAttribute('data-id');
+    const parkingSlotId = event.target.getAttribute('data-id');
     const dateFrom = event.target.getAttribute('data-date');
     const dateTo = event.target.getAttribute('data-date');
-    const rate = event.target.getAttribute('data-rate');  
+    const price = event.target.getAttribute('data-rate');  
    
     const response = await fetch('/api/slotBooking/', {
       method: 'POST',
-      body: JSON.stringify({ id, dateFrom, dateTo, rate }),
-      headers: { 'Content-Type': 'application/jsonp' },
+      body: JSON.stringify({ parkingSlotId, dateFrom, dateTo, price }),
+      headers: { 'Content-Type': 'application/json' },
     });
 
     if (response.ok) {
@@ -19,6 +19,9 @@ const bookaspotHandler = async (event) => {
   }    
 };
 
-console.log( typeof document.querySelector('#bookaspot'));
-document.querySelector('#bookaspot').addEventListener('click', bookaspotHandler);
 
+//console.log( typeof document.querySelector('#bookaspot'));
+const buttonEls = document.querySelectorAll('#bookaspot');
+if (buttonEls.length > 0){
+  buttonEls.forEach(buttonEl => {addEventListener('click', bookaspotHandler);});
+}
