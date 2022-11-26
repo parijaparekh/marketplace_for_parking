@@ -20,6 +20,11 @@ const rentaspotHandler = async (event) => {
     }
 };
 
+$(function() {
+  $('#datepicker').datepicker();
+});
+
+
 //document.querySelector('#datepicker').datepicker();
 document.querySelector('#spotSearch').addEventListener('submit',rentaspotHandler);
   
