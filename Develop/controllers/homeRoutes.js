@@ -26,6 +26,15 @@ router.get('/rentaspot', withAuth, async (req, res) => {
   res.render('rentaspot', {logged_in: true});
 });
 
+router.get('/sellaspot', withAuth, async (req, res) => {
+  res.render('sellaspot', {logged_in: true});
+});
+
+router.get('/profile', withAuth, async (req, res) => {
+  res.render('profile', {logged_in: true});
+});
+
+
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {

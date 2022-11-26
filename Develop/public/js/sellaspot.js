@@ -1,5 +1,4 @@
-<script type = "text/JavaScript" src = " https://MomentJS.com/downloads/moment.js"></script>
-
+//declare moment pending
 function getDates(startDate, stopDate) {
     var dateArray = [];
     var currentDate = moment(startDate);
@@ -41,6 +40,18 @@ const sellaspotHandler = async (event) => {
     }
   };
   
+  $(function () {
+    $('#datepicker1').datepicker();
+    $('#datepicker2').datepicker({
+    useCurrent: false //Important! See issue #1075
+    });
+    $("#datepicker1").on("dp.change", function (e) {
+        $('#datepicker2').data("DatePicker").minDate(e.date);
+    });
+    $("#datepicker2").on("dp.change", function (e) {
+        $('#datepicker1').data("DatePicker").maxDate(e.date);
+    });
+  });  
   
   document
     .querySelector('#sellaspot-form')
