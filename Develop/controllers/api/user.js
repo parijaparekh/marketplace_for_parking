@@ -1,7 +1,8 @@
 //copy paste from mini_project /user 
 
 const router = require('express').Router();
-const { User } = require('../../models');
+const { Sequelize } = require('sequelize');
+const { User, ParkingSlot, ParkingSlotDates, Address, SlotBooking, LocationTag } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.post('/', async (req, res) => {
@@ -49,6 +50,40 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
+  }
+});
+
+
+router.get('/dashboard', withAuth, async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    console.log(req.session.user_id);
+    user_id = req.session.user_id;
+    //user_id = 2;
+    // parking slots available and slod for the user across all parkingSlots registered with him.
+   
+    let parkingSlotsInfo = await ParkingSlot.findAll({
+      include: [ {model: Address}, {model: LocationTag},
+                 {model: User, required: true, where: {id: user_id}} ],
+                 nest: true, raw: true});
+    
+    parkingSlotsInfo.forEach(async parkingSlot => { 
+            parkingSlot['parkingDatesAvailable'] = await ParkingSlotDates.findAll({
+                                where: {parkingSlotId: parkingSlot.id}, 
+                                nest: true, raw: true});});
+    parkingSlotsInfo.forEach(async parkingSlot => { 
+            parkingSlot['parkingDatesBooked'] = await SlotBooking.findAll({
+                                where: {parkingSlotId: parkingSlot.id}, 
+                                nest: true, raw: true});});                           
+
+    console.log(...parkingSlotsInfo);
+    //res.status(200).json(parkingSlotsBooked);
+    res.render('dashboard', {
+      parkingSlotsInfo,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
