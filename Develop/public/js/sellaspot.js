@@ -25,14 +25,14 @@ const sellaspotHandler = async (event) => {
     const  postcode = document.querySelector('#postcode').value.trim();
     const  startDate = document.querySelector('#startDate').value.trim();
     const  endDate = document.querySelector('#endDate').value.trim();
-    const  locationTags = document.querySelector('#locationTags').value;
+    const  tags = [document.querySelector('#locationTags').value];
     const  rate = document.querySelector('#rate').value.trim();
     const  dates = getDates(startDate, endDate);
-    console.log(dates);
-    if (slotNo && street_number && street_name && suburb && postcode && dates && locationTags && rate) {
+    console.log(tags);
+    if (slotNo && street_number && street_name && suburb && postcode && dates && tags && rate) {
       const response = await fetch('/api/parkingSlot/', {
         method: 'POST',
-        body: JSON.stringify({ slotNo, street_number, street_name, suburb, state, postcode, dates, locationTags, rate }),
+        body: JSON.stringify({ slotNo, street_number, street_name, suburb, state, postcode, dates, tags, rate }),
         headers: { 'Content-Type': 'application/json' },
       });
   
