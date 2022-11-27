@@ -66,4 +66,27 @@ router.get('/logout', withAuth, (req, res) => {
   }
 });
 
+//Update user details, then returns the message that details are updated.
+router.put('/:id', async(req, res) => {
+  try {
+    const updatedUser = await User.update(
+      {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: req.body.password
+      },
+      {
+        where:{
+          id: req.params.id
+        },
+        individualHooks: true
+      })
+      res.status(200).json({message: "User details updated!"})
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
+
 module.exports = router;

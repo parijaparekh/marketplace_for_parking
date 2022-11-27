@@ -1,0 +1,36 @@
+<div class="container text_center">
+  <div class="row justify-content-center border">
+    <div class="col-6 p-5">
+      <h2>Welcome {{last_name}}, {{first_name}}!</h2>
+    </div>
+  </div>
+
+  <div class="row justify-content-around p-3">
+    <div class="col-5 border bg-light p-3">
+      <h3>Your Parking Slots for Lease:</h3>
+      {{#each parkingSlots as |parkingSlot|}}
+        <div class="border bg-info p-2">
+            <p>{{address.street_number}} {{address.street_name}}: ${{rate}} {{bookingTimeFrame}}</p>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="pslot+{{id}}" aria-expanded="true" aria-controls="pslot+{{id}}">Options</button>
+            <div class="collapse" id="pslot+{{id}}">
+              <p>Options</p>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    <div class="col-5 border bg-light p-3">
+      <h3>Parking Slots you have booked:</h3>
+      {{#each slotbookings as |bookedSlot|}}
+        <div class="border bg-info p-2">
+          <p>{{parkingSlot.address.street_number}} {{parkingSlot.address.street_name}}: Booked from {{format_date dateTimeFrom}} to {{format_date dateTimeTo}}</p>
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="bslot+{{id}}" aria-expanded="false" aria-controls="bslot+{{id}}">Options</button>
+          <div class="collapse" id="bslot+{{id}}">
+            <p>Options</p>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>

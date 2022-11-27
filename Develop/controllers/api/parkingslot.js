@@ -16,6 +16,7 @@ async function createAddress(addressData){
 router.post('/', withAuth, async (req, resp) => {
     try {
       console.log(req.body);
+      //Splits the request body into relevant constants. partialData contains the rate and optionally the booking time frame.
       const {street_name, street_number, state, postcode, suburb, slotNo, dates, tags, ...partialData} = req.body;
       console.log(dates, tags, partialData);
       //let tags = [];
@@ -78,5 +79,59 @@ router.get('/search', withAuth, async(req, resp) => {
     resp.status(400).json(err);
   }
 });
+
+//Update path. What feasably changes are the booking timeframes and the rates, so it isn't very big.
+router.put('/:id', async(req, res) => {
+  try {
+    const updatedSlot = await ParkingSlot.update(
+      {
+        bookingTimeFrame: req.body.bookingTimeFrame,
+        rate: req.body.rate
+      },
+      {
+        where:{
+          id: req.params.id,
+          leaser_id: req.session.user_id
+        }
+      })
+      res.status(200).json("Parking Slot updated!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+//Deletes a singular parking slot based on its id
+router.delete('single/:id', async(req, res) => {
+  try {
+    const slotGoBoom = await ParkingSlot.destroy(
+      {
+        where:{
+          id: req.params.id,
+          leaser_id: req.session.user_id
+        }
+      })
+      res.status(200).json("Parking Slot deleted!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
+
+//Deletes all parking slots from a specific user, with their ID as the parameter.
+router.delete('/all', async(req, res) => {
+  try {
+    const slotsGoBoom = await ParkingSlot.destroy(
+      {
+        where:{
+          leaser_id: req.session.user_id
+        }
+      })
+      res.status(200).json("All Parking Slots deleted!")
+  } 
+  catch (err) {
+    res.status(400).json(err)
+  }
+})
 
 module.exports = router;
