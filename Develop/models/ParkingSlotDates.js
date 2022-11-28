@@ -26,6 +26,11 @@ ParkingSlotDates.init(
             type: DataTypes.DATEONLY,
             allowNull: false,
         }, 
+        rate:{
+            type: DataTypes.DECIMAL(10,2),
+            allowNull: true,
+            defaultValue: 20.00,   
+        }, 
     },//end of attributes
     {
         hooks:

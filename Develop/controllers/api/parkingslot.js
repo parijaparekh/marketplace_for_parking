@@ -33,7 +33,7 @@ router.post('/', withAuth, async (req, resp) => {
           dates.forEach(date => {
             const formattedDate = new Date(date);
             if (formattedDate instanceof Date){
-              parkingSlotDates.push({"date": formattedDate, "parkingSlotId": parkingSlotData.id});
+              parkingSlotDates.push({"date": formattedDate, "parkingSlotId": parkingSlotData.id, "rate": parkingSlotData.rate});
             }
             else{  
               incorrectDates.push(date);
@@ -76,6 +76,44 @@ router.get('/search', withAuth, async(req, resp) => {
   } 
   catch (err) {
     resp.status(400).json(err);
+  }
+});
+
+router.put('/parkingDateUpdate/:id', async (req, res) => {
+  try {
+    const parkingSlotDates = await ParkingSlotDates.update(
+    {
+      date: new Date(req.body.date),
+      rate: req.body.rate
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.status(200).json(parkingSlotDates);
+  } catch (err) {
+      res.status(500).json(err);
+    };
+});
+
+router.delete('/parkingDateDelete/:id', withAuth, async (req, res) => {
+  try {
+    const parkingSlotDates =  await ParkingSlotDates.destroy({
+      where: {
+        id: req.params.id
+      }});
+    req.session.logged_in = true;
+    
+    if (!parkingSlotDates) {
+      res.status(404).json({ message: 'The parking slot is not registered for this date' });
+      return;
+    }
+
+    res.status(200).json({message: 'The parking slot is removed for this date'});
+    }
+  catch (err) {
+    res.status(400).json(err);
   }
 });
 
