@@ -7,7 +7,7 @@
   <thead>
       <tr>          
           <th>Parking Spot Address</th>
-          <th>Modify</th>
+          <th>Location Tagging</th>
       </tr>
   </thead>
   
@@ -18,6 +18,9 @@
           <td>
               {{parkingSlotInfo.locationTags.locationTag}}
           </td>
+          <td>
+            <button type="click" class="btn btn-success"  id="edit_parkingSlotInfo" data-id={{parkingSlotInfo.id}}>Edit</button>
+         </td>
       </tr>
         {{#if parkingSlotInfo.parkingDatesAvailable}}
             <table id="parkingSlotsDate_"+{{parkingSlotInfo.id}} class="table table-striped table-bordered" style="width:100%">
@@ -38,10 +41,7 @@
                         </td>
                         <td>
                             <button type="click" class="btn btn-success" name="edit_{{parkingDate.id}}" id="edit" data-id={{parkingDate.id}} >Edit</button>
-                        </td>
-                        <!--<td>
-                            <button type="click" class="btn btn-success"  id="submit" data-id={{parkingDate.id}} >Submit Change</button>
-                        </td> -->
+                        </td>                       
                     </tr>
                 </tbody>
                 {{/each}}

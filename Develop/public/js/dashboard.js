@@ -36,20 +36,19 @@ const parkingSpotDateEditMode = (event) => {
       //console.log("rate_"+`${id}`);
       /* Making input boxes writable */
       toggleReadOnly("rate_"+`${id}`);
-      toggleReadOnly("date_"+`${id}`); 
+      //toggleReadOnly("date_"+`${id}`); 
       document.getElementsByName("edit_"+`${id}`)[0].addEventListener('click', editHandler);     
     }    
   };
   
 const editHandler = async (event) => {
     event.preventDefault();
-    if (event.target.hasAttribute('date-id')){
+    if (event.currentTarget.hasAttribute('data-id')){
+        const id = event.target.getAttribute('data-id');
         toggleReadOnly("rate_"+`${id}`);
-        toggleReadOnly("date_"+`${id}`); 
-        const id = event.target.getAttribute('date-id');
+        //toggleReadOnly("date_"+`${id}`); 
         const newdate = document.querySelector('#date_'+`${id}`).value.trim();
         const newrate = document.querySelector('#rate_'+`${id}`).value.trim();
-        //console.log(JSON.stringify(date,rate));
         console.log(JSON.stringify({
             "date":  newdate,
             "rate":  newrate,
@@ -74,6 +73,10 @@ const editHandler = async (event) => {
     }
   };
   
+  const editParkingSlotInfoHandler = async (event) => {
+        console.log("editParkingSlotHandler");
+  }; 
+
   const buttonDelEls = document.querySelectorAll('#delete');
   if (buttonDelEls.length > 0){
       buttonDelEls.forEach(buttonDelEl => {buttonDelEl.addEventListener('click', parkingSpotDateDelHandler);});
@@ -82,4 +85,9 @@ const editHandler = async (event) => {
   const buttonEditEls = document.querySelectorAll('#edit');
   if (buttonEditEls.length > 0){
     buttonEditEls.forEach(buttonEditEl => {buttonEditEl.addEventListener('click', parkingSpotDateEditMode);});
+  }
+
+  const parkingSlotInfoEls = document.querySelectorAll('#edit_parkingSlotInfo');
+  if (parkingSlotInfoEls.length > 0){
+    parkingSlotInfoEls.forEach(parkingSlotInfoEl => {parkingSlotInfoEl.addEventListener('click', editParkingSlotInfoHandler);});
   }
