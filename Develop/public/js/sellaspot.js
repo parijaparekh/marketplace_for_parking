@@ -1,6 +1,5 @@
 //declare moment pending
 
-
 function getDates(startDate, stopDate) {
     var dateArray = [];
     var currentDate = moment( new Date(startDate));

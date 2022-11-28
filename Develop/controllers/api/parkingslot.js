@@ -79,6 +79,17 @@ router.get('/search', withAuth, async(req, resp) => {
   }
 });
 
+
+/*Todo: Put in the code here to get the info about parkingSlot
+  Need to use findByPk On ParkingSlot model and include address and locationTag models */
+router.get('/parkingSlot/:id' , withAuth, async (req, res) => {
+  //res.render('EditParkingInfo handlebar, {parkingSlot, logged_in: true});
+});
+
+/*Todo: Put the code for update of parkingSlotInfo. 
+ Editable fields are locationTags, All fields of address. */
+router.put('/parkingSlotInfoUpdate/:id', async (req, res) => {});
+
 router.put('/parkingDateUpdate/:id', async (req, res) => {
   try {
     const parkingSlotDates = await ParkingSlotDates.update(

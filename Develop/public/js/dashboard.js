@@ -73,6 +73,7 @@ const editHandler = async (event) => {
     }
   };
   
+  /*Todo: write the code here to call the api/parkingSlot/id Api by id */
   const editParkingSlotInfoHandler = async (event) => {
         console.log("editParkingSlotHandler");
   }; 
