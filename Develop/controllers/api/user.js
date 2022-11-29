@@ -66,7 +66,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
                  {model: User, required: true, where: {id: user_id}} ],
                  nest: true, raw: true});
     
-    parkingSlotsInfo.forEach(async parkingSlot => { 
+    //Now moved to parkingSlotDetails in parkingSlot 
+    /*parkingSlotsInfo.forEach(async parkingSlot => { 
               parkingSlot['parkingDatesAvailable'] = await ParkingSlotDates.findAll({
                                   where: {parkingSlotId: parkingSlot.id}, 
                                   nest: true, raw: true});});
@@ -77,7 +78,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     console.log(...parkingSlotsInfo);
     //res.status(200).json(parkingSlotsBooked);
-    // it 
+    // it */ 
     res.render('dashboard', {
       parkingSlotsInfo,
       logged_in: true

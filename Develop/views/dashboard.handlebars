@@ -20,9 +20,10 @@
           </td>
           <td>
             <button type="click" class="btn btn-success"  id="edit_parkingSlotInfo" data-id={{parkingSlotInfo.id}}>Edit</button>
+            <button type="click" class="btn btn-success"  id="details_parkingSlotInfo" data-id={{parkingSlotInfo.id}}>Details</button>
          </td>
       </tr>
-        {{#if parkingSlotInfo.parkingDatesAvailable}}
+      <!-- {{#if parkingSlotInfo.parkingDatesAvailable}}
             <table id="parkingSlotsDate_"+{{parkingSlotInfo.id}} class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>          
@@ -46,7 +47,7 @@
                 </tbody>
                 {{/each}}
             </table>
-        {{/if}}    
+        {{/if}} -->    
     </tbody>
     {{/each}}
 </table>

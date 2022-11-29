@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { ParkingSlot, Address, User, ParkingSlotDates, LocationTag} = require('../../models');
+const { ParkingSlot, Address, User, ParkingSlotDates, LocationTag, SlotBooking} = require('../../models');
 const withAuth = require('../../utils/auth');
 
 async function createAddress(addressData){
@@ -186,6 +186,24 @@ router.delete('/parkingDateDelete/:id', withAuth, async (req, res) => {
   catch (err) {
     res.status(400).json(err);
   }
+});
+
+router.get('/Details/:id', withAuth, async(req, resp) => {
+  try{ 
+   const parkingSlotInfo = await ParkingSlot.findOne({
+                                    where: {id: req.params.id},
+                                    include: [{model: ParkingSlotDates}, {model: SlotBooking}], 
+                                    nest: true, 
+                                    raw: true});
+    
+    console.log(...parkingSlotInfo);
+    resp.render("dashBoardDetails", {parkingSlotInfo, logged_in: true});
+  }
+   catch(err){
+      resp.status(400).json({message: "Couldn't find the details for the provided parking slot id"});
+   }
+    //res.status(200).json(parkingSlotsBooked);
+    // it */
 });
 
 module.exports = router;

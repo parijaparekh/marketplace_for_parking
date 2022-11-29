@@ -1,4 +1,3 @@
-//handler for deleting a parkingSlotDate
 const toggleReadOnly = (elName) => {
     if (document.getElementById(elName).hasAttribute('readonly')){
         document.getElementById(elName).readOnly = false;
@@ -8,7 +7,7 @@ const toggleReadOnly = (elName) => {
     }
 };
 
-/*const parkingSpotDateDelHandler = async (event) => {
+const parkingSpotDateDelHandler = async (event) => {
     event.preventDefault();
     console.log("In parkingSpotDateDelHandler");
     if (event.target.hasAttribute('data-id')){
@@ -34,8 +33,8 @@ const parkingSpotDateEditMode = (event) => {
       const id = event.target.getAttribute('data-id');
       //console.log("Work in progress");
       //console.log("rate_"+`${id}`);
-      // Making input boxes writable 
-        toggleReadOnly("rate_"+`${id}`);
+      /* Making input boxes writable */
+      toggleReadOnly("rate_"+`${id}`);
       //toggleReadOnly("date_"+`${id}`); 
       document.getElementsByName("edit_"+`${id}`)[0].addEventListener('click', editHandler);     
     }    
@@ -71,38 +70,9 @@ const editHandler = async (event) => {
             alert('Failed to edit parking slot info.');
         }
     }
-  }; */
-  
-  /*Todo: write the code here to call the api/parkingSlot/id Api by id */
-  const editParkingSlotInfoHandler = async (event) => {
-    console.log("editParkingSlotHandler");
-    event.preventDefault();
-    if (event.currentTarget.hasAttribute('data-id')){
-        const id = event.target.getAttribute('data-id');
-        if (id) {
-          const query = "id="+`${id}`;
-          const url = "/api/parkingSlot?";
-          console.log(url+query);
-          document.location.replace(url+query);
-        }
-    };
-  };
-  
-  const detailsHandler = async (event) => {
-    console.log("detailsParkingSlotHandler");
-    event.preventDefault();
-    if (event.currentTarget.hasAttribute('data-id')){
-        const id = event.target.getAttribute('data-id');
-        if (id) {
-          const query = "id="+`${id}`;
-          const url = "/api/parkingSlot/Details?";
-          console.log(url+query);
-          document.location.replace(url+query);
-        }
-    };
   };
 
-  /*const buttonDelEls = document.querySelectorAll('#delete');
+  const buttonDelEls = document.querySelectorAll('#delete');
   if (buttonDelEls.length > 0){
       buttonDelEls.forEach(buttonDelEl => {buttonDelEl.addEventListener('click', parkingSpotDateDelHandler);});
   }
@@ -110,14 +80,4 @@ const editHandler = async (event) => {
   const buttonEditEls = document.querySelectorAll('#edit');
   if (buttonEditEls.length > 0){
     buttonEditEls.forEach(buttonEditEl => {buttonEditEl.addEventListener('click', parkingSpotDateEditMode);});
-  }*/
-
-  const parkingSlotInfoEls = document.querySelectorAll('#edit_parkingSlotInfo');
-  if (parkingSlotInfoEls.length > 0){
-    parkingSlotInfoEls.forEach(parkingSlotInfoEl => {parkingSlotInfoEl.addEventListener('click', editParkingSlotInfoHandler);});
-  }
-
-  const detailsEls = document.querySelectorAll('#details_parkingSlotInfo');
-  if (detailsEls.length > 0){
-    detailsEls.forEach(detailsEl => {detailsEl.addEventListener('click', detailsHandler);});
   }
