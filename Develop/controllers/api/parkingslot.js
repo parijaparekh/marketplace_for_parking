@@ -188,10 +188,11 @@ router.delete('/parkingDateDelete/:id', withAuth, async (req, res) => {
   }
 });
 
-router.get('/Details/:id', withAuth, async(req, resp) => {
+router.get('/Details', withAuth, async(req, resp) => {
   try{ 
+  console.log("In ParkingSlot Details fetcher");
    const parkingSlotInfo = await ParkingSlot.findOne({
-                                    where: {id: req.params.id},
+                                    where: {id: req.query.id},
                                     include: [{model: ParkingSlotDates}, {model: SlotBooking}], 
                                     nest: true, 
                                     raw: true});
