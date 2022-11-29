@@ -69,9 +69,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
                  nest: true, raw: true});
     
     parkingSlotsInfo.forEach(async parkingSlot => { 
-            parkingSlot['parkingDatesAvailable'] = await ParkingSlotDates.findAll({
-                                where: {parkingSlotId: parkingSlot.id}, 
-                                nest: true, raw: true});});
+              parkingSlot['parkingDatesAvailable'] = await ParkingSlotDates.findAll({
+                                  where: {parkingSlotId: parkingSlot.id}, 
+                                  nest: true, raw: true});});
     parkingSlotsInfo.forEach(async parkingSlot => { 
             parkingSlot['parkingDatesBooked'] = await SlotBooking.findAll({
                                 where: {parkingSlotId: parkingSlot.id}, 
