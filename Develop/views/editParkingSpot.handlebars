@@ -1,0 +1,54 @@
+<div class="container-xl">
+  <form class="row g-3" id="editaspot-form" data-id={{parkingSlot.id}} data-addressId={{parkingSlot.address.id}} data-locationTagsId = {{parkingSlot.locationTags.id}}>
+      <div class="col-md-6">
+        <label class="form-label">Slot Number</label>
+        <input type="text" class="form-control" id="slotNo" value= {{parkingSlot.address.slotNo}}>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Street Number </label>
+        <input type="text" class="form-control" id="streetNo" value={{parkingSlot.address.street_number}}>
+      </div>
+      <div class="col-12">
+        <label class="form-label">Street Name</label>
+        <input type="text" class="form-control" id="streetName" value={{parkingSlot.address.street_name}}>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Suburb </label>
+        <input type="text" class="form-control" id="suburb" value={{parkingSlot.address.suburb}}>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">State</label>
+        <select class="form-select" id="state" aria-label="Default select example">
+          <option selected>Choose</option>
+          <option value="1">NSW</option>
+          <option value="2">NT</option>
+          <option value="3">SA</option>
+          <option value="3">TAS</option>
+          <option value="3">VIC</option>
+          <option value="3">WA</option>
+        </select>
+    </div>
+      <div class="col-md-2">
+        <label class="form-label">Post Code</label>
+        <input type="text" class="form-control" id="postcode" value={{parkingSlot.address.postcode}}>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Rate</label>
+        <input type="text" class="form-control" id="rate" value={{parkingSlot.rate}}>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Location Tag</label>
+        <select class="form-select" id="locationTags" aria-label="Default select example">
+          <option selected>Choose</option>
+          <option value="Elizabeth Quay">Elizabeth Quay</option>
+          <option value="City">City</option>
+          <option value="Airport">Airport</option>
+        </select>
+    </div>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="submit" data-id={{parkingSlot.id}}>Edit Parking Spot</button>
+    </div>
+  </form>
+</div>
+
+<script src="/js/editParkingSlotInfo.js"></script>

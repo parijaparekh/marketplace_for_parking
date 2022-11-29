@@ -76,6 +76,16 @@ const editHandler = async (event) => {
   /*Todo: write the code here to call the api/parkingSlot/id Api by id */
   const editParkingSlotInfoHandler = async (event) => {
         console.log("editParkingSlotHandler");
+        event.preventDefault();
+        if (event.currentTarget.hasAttribute('data-id')){
+            const id = event.target.getAttribute('data-id');
+            if (id) {
+              const query = "id="+`${id}`;
+              const url = "/api/parkingSlot?";
+              console.log(url+query);
+              document.location.replace(url+query);
+            }
+        };
   }; 
 
   const buttonDelEls = document.querySelectorAll('#delete');

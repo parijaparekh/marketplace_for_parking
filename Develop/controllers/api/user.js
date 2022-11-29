@@ -53,6 +53,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+//const parkingSlotInfo = async () => await
 
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
@@ -78,6 +79,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     console.log(...parkingSlotsInfo);
     //res.status(200).json(parkingSlotsBooked);
+    // it 
     res.render('dashboard', {
       parkingSlotsInfo,
       logged_in: true

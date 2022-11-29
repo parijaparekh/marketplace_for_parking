@@ -82,15 +82,74 @@ router.get('/search', withAuth, async(req, resp) => {
 
 /*Todo: Put in the code here to get the info about parkingSlot
   Need to use findByPk On ParkingSlot model and include address and locationTag models */
-router.get('/parkingSlot/:id' , withAuth, async (req, res) => {
+router.get('/' , withAuth, async (req, res) => {
   //res.render('EditParkingInfo handlebar, {parkingSlot, logged_in: true});
+  try{
+    console.log("Printing stored data", req.query.id);
+    const parkingSlot = await ParkingSlot.findOne({ // this was the other thing that findByPK  doesn't work.
+                                    where: {id: req.query.id},
+                                    include: [
+                                      {model: Address}, {model: LocationTag}],
+                                    raw: true, nest: true});
+  
+    console.log(...[parkingSlot]); // This was the problem area @Tyson. shall explain you later 
+    res.render('editParkingSpot', {parkingSlot, logged_in: true}); 
+  } 
+  catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
 });
 
 /*Todo: Put the code for update of parkingSlotInfo. 
  Editable fields are locationTags, All fields of address. */
-router.put('/parkingSlotInfoUpdate/:id', async (req, res) => {});
+router.put('/parkingSlotAddressUpdate/:id', withAuth, async (req, res) => {
+  console.log("In parkingSlotAddressUpdate");
+  const {slotNo, street_number, street_name, suburb, state, postcode} = req.body;
+  try {
+    const addressData = await Address.update(
+    {
+      slotNo : slotNo,
+      street_number : street_number,
+      street_name : street_name, 
+      suburb: suburb,
+      postcode: postcode,
+      state: state, 
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    });
+    req.session.logged_in = true;
+    res.status(200).json(addressData);
+  } catch (err) {
+      res.status(500).json(err);
+  };
+});
 
-router.put('/parkingDateUpdate/:id', async (req, res) => {
+router.put('/parkingSlotLocationTagUpdate/:id', withAuth, async (req, res) => {
+  console.log("In parkingSlotLocationTagUpdate");
+  const tags = req.body.tags;
+  console.log(tags, req.params.id);
+  try {
+    const locationTagsData = await LocationTag.update(
+    {
+      locationTag: tags[0],
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    });
+    //req.session.logged_in = true;
+    res.status(200).json(locationTagsData);
+  } catch (err) {
+    res.status(500).json(err);
+  };
+});
+
+router.put('/parkingDateUpdate/:id', withAuth, async (req, res) => {
   try {
     const parkingSlotDates = await ParkingSlotDates.update(
     {
@@ -102,6 +161,7 @@ router.put('/parkingDateUpdate/:id', async (req, res) => {
         id: req.params.id,
       },
     });
+    req.session.logged_in = true;
     res.status(200).json(parkingSlotDates);
   } catch (err) {
       res.status(500).json(err);
