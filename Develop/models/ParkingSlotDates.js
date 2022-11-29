@@ -1,6 +1,6 @@
 const sequelize = require("../config/connection");
 const { Model, DataTypes } = require('sequelize');
-const ParkingSlot = require('./parkingSlot');
+const ParkingSlot = require('./ParkingSlot');
 
 class ParkingSlotDates extends Model{
 

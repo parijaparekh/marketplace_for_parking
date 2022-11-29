@@ -53,8 +53,6 @@ router.post('/login', async (req, res) => {
   }
 });
 
-//const parkingSlotInfo = async () => await
-
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID

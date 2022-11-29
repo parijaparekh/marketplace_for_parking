@@ -38,6 +38,7 @@
                 </li>
                 <button class="btn btn-primary m-2" type="button" id="dashboard" href="/dashboard">Dashboard</button>
                 <button class="btn btn-primary m-2" type="click" id="logout">Logout</button>
+                <!--<button class="btn btn-primary m-2" type="button" id="userDashboardData"  href="/abc">DashboardData</button> -->
               </ul>
           {{else}}
             <form class="d-flex" id="login-form">
@@ -74,13 +75,10 @@
         
         
         {{#if logged_in}}
-          <script src="/js/logout.js"></script>
+          <script src="/js/logout.js"></script>          
         {{else}}
           <script src="/js/login.js"></script>
         {{/if}}     
-    
-
-
 </body>
 </html>
       

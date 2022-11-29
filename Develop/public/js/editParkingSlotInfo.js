@@ -1,5 +1,4 @@
 //Todo: Change the code here to 
-
 const updateSpotHandler = async (event) => {
   console.log("In updateSpotHandler");
   event.preventDefault();
