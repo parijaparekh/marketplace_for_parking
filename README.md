@@ -31,6 +31,8 @@ If you you have any questions you can email me them via:
 - tyson@alittledesigner.com
 
 Live app is running at [link](https://powerful-basin-02440.herokuapp.com/) go check it out!
+Here is our presentaion with more information on the app [RentAbay (1).pdf](https://github.com/parijaparekh/marketplace_for_parking/files/10124730/RentAbay.1.pdf)
+
 
 ![image](https://user-images.githubusercontent.com/105157961/204841734-d88d1668-30de-4c44-996a-8a1ba82b13e9.png)
 ![image](https://user-images.githubusercontent.com/105157961/204841766-c24f3699-d241-43be-bf6d-97597522e604.png)
