@@ -92,7 +92,8 @@ router.get('/logout', withAuth, (req, res) => {
   console.log("Logout");
   if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.redirect('/login');
+      //changed /login to / for submission requirement
+      res.redirect('/');
       //res.status(204).end();
       //res.render('login');
     });

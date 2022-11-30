@@ -92,7 +92,7 @@ router.get('/' , withAuth, async (req, res) => {
                                       {model: Address}, {model: LocationTag}],
                                     raw: true, nest: true});
   
-    console.log(...[parkingSlot]); // This was the problem area @Tyson. shall explain you later 
+    console.log(parkingSlot); // This was the problem area @Tyson. shall explain you later 
     res.render('editParkingSpot', {parkingSlot, logged_in: true}); 
   } 
   catch (err) {
@@ -188,23 +188,72 @@ router.delete('/parkingDateDelete/:id', withAuth, async (req, res) => {
   }
 });
 
-router.get('/Details', withAuth, async(req, resp) => {
+router.get('/availableSlots/:id',  async(req, resp) => {
   try{ 
   console.log("In ParkingSlot Details fetcher");
-   const parkingSlotInfo = await ParkingSlot.findOne({
-                                    where: {id: req.query.id},
-                                    include: [{model: ParkingSlotDates}, {model: SlotBooking}], 
-                                    nest: true, 
+  const availableDates = await ParkingSlotDates.findAll({
+                                    where: {parkingSlotId: req.params.id},
+                                    raw: true});
+  console.log(...availableDates);
+  resp.status(200).json(availableDates);
+  }
+  catch(err){
+      resp.status(400).json({message: "No Dates avaiable for this slot"});
+   }    
+});
+
+router.get('/bookedSlots/:id',  async(req, resp) => {
+  try{ 
+    console.log("In BookedSlots Details fetcher");
+    const bookedSlots = await SlotBooking.findAll({
+                                    where: {parkingSlotId: req.params.id},
+                                    include: [{model: User}],
                                     raw: true});
     
-    console.log(...parkingSlotInfo);
-    resp.render("dashBoardDetails", {parkingSlotInfo, logged_in: true});
+    console.log(...bookedSlots);
+    resp.status(200).json(bookedSlots);
   }
-   catch(err){
-      resp.status(400).json({message: "Couldn't find the details for the provided parking slot id"});
-   }
-    //res.status(200).json(parkingSlotsBooked);
-    // it */
+  catch(err){
+      resp.status(400).json({message: "No Bookings avaiable for this slot"});
+   }    
+});
+
+router.get('/parkingSpotDetails', withAuth, async(req,res) =>{
+  try{
+    console.log("ParkingSpot Details");
+    let parkingSlotInfo = {};
+    const id = req.query.id;
+    console.log("Details are being fetched for: " + `${id}`);
+    if (id) {
+      const [availableSlots, bookedSlots, parkingSlot] = await Promise.all(
+        [
+          ParkingSlotDates.findAll({
+            where: {parkingSlotId: id},
+            raw: true}),
+          SlotBooking.findAll({
+          where: {parkingSlotId: id},
+          include: [{model: User}],
+          raw: true, 
+          nest: true}), 
+          ParkingSlot.findOne({
+            where: {id: id},
+            include: [{model: Address}, {model: LocationTag}], 
+            raw: true, 
+            nest: true})
+        ]);
+      parkingSlotInfo['parkingDatesAvailable'] = await availableSlots;
+      parkingSlotInfo['bookedSlots'] = await bookedSlots;
+      parkingSlotInfo['address'] = await parkingSlot.address;
+      parkingSlotInfo['locationTags'] = await parkingSlot.locationTags;
+      parkingSlotInfo['id'] = id;     
+      //console.log(parkingSlot);
+      console.log(parkingSlotInfo);
+    }// end of if
+    res.render('dashboardDetails', {parkingSlotInfo: parkingSlotInfo, logged_in: true});            
+  }
+  catch(err){
+    res.status(400).json(err);
+  }
 });
 
 module.exports = router;

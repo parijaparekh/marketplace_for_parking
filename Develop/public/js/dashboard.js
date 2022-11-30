@@ -8,6 +8,7 @@ const toggleReadOnly = (elName) => {
     }
 };
 
+//all this code npw resides in dashboarddetails
 /*const parkingSpotDateDelHandler = async (event) => {
     event.preventDefault();
     console.log("In parkingSpotDateDelHandler");
@@ -91,26 +92,20 @@ const editHandler = async (event) => {
   const detailsHandler = async (event) => {
     console.log("detailsParkingSlotHandler");
     event.preventDefault();
-    if (event.currentTarget.hasAttribute('data-id')){
+    
+    if (event.target.hasAttribute('data-id')){
         const id = event.target.getAttribute('data-id');
         if (id) {
-          const query = "id="+`${id}`;
-          const url = "/api/parkingSlot/Details?";
-          console.log(url+query);
-          document.location.replace(url+query);
+          console.log("About to switch to server: "+id);
+          const params = { 
+            "id": id
+          };
+          const query = Object.keys(params).map(k => `${k}=${params[k]}`).join('&');
+          const url = "/api/parkingSlot/parkingSpotDetails?";
+          document.location.replace(url+query);    
         }
+      }
     };
-  };
-
-  /*const buttonDelEls = document.querySelectorAll('#delete');
-  if (buttonDelEls.length > 0){
-      buttonDelEls.forEach(buttonDelEl => {buttonDelEl.addEventListener('click', parkingSpotDateDelHandler);});
-  }
-
-  const buttonEditEls = document.querySelectorAll('#edit');
-  if (buttonEditEls.length > 0){
-    buttonEditEls.forEach(buttonEditEl => {buttonEditEl.addEventListener('click', parkingSpotDateEditMode);});
-  }*/
 
   const parkingSlotInfoEls = document.querySelectorAll('#edit_parkingSlotInfo');
   if (parkingSlotInfoEls.length > 0){
